@@ -6,45 +6,50 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/28 17:42:53 by mratke           ###   ########.fr       */
+/*   Updated: 2024/10/28 21:01:09 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static char	*read_line(int fd, char *current_line)
+{
+	char	*tmp;
+	char	*readed_chars;
+	int		readed_bytes;
+
+	readed_chars = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (readed_chars == NULL)
+		return (free(current_line), NULL);
+	readed_chars[0] = '\0';
+	while (is_in_str(readed_chars, '\n') == 0)
+	{
+		readed_bytes = read(fd, readed_chars, BUFFER_SIZE);
+		if (readed_bytes == -1)
+			return (free(readed_chars), free(current_line), NULL);
+		if (readed_bytes == 0)
+			break ;
+		readed_chars[readed_bytes] = '\0';
+		tmp = ft_str_merge(current_line, readed_chars);
+		if (tmp == NULL)
+			return (free(readed_chars), free(current_line), NULL);
+		free(current_line);
+		current_line = tmp;
+	}
+	free(readed_chars);
+	return (current_line);
+}
+
 char	*get_next_line(int fd)
 {
-	char	*current;
-	int		bytes_read;
-	char	*final;
-	char	*tmp;
+	char	*buffer;
 
-	if (fd == -1)
+	buffer = malloc(sizeof(char));
+	if (buffer == NULL)
 		return (NULL);
-	final = malloc(sizeof(char));
-	if (final == NULL)
-		return (NULL);
-	final[0] = '\0';
-	current = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (current == NULL)
-		return (free(final), NULL);
-	current[0] = '\0';
-	while (is_in_str(current, '\n') == 0)
-	{
-		bytes_read = read(fd, current, BUFFER_SIZE);
-		if (bytes_read == -1)
-			return (free(current), free(final), NULL);
-		if (bytes_read == 0)
-			break ;
-		current[bytes_read] = '\0';
-		tmp = ft_str_merge(final, current);
-		if (tmp == NULL)
-			return (free(current), free(final), NULL);
-		free(final);
-		final = tmp;
-	}
-	close(fd);
-	if (final[0] == '\0')
-		return (free(current), free(final), NULL);
-	return (free(current), final);
+	buffer[0] = '\0';
+	buffer = read_line(fd, buffer);
+	if (buffer == NULL || buffer[0] == '\0')
+		return (free(buffer), NULL);
+	return (buffer);
 }
