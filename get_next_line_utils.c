@@ -6,12 +6,11 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:28 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/28 16:04:51 by mratke           ###   ########.fr       */
+/*   Updated: 2024/10/28 22:16:16 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "get_next_line.h"
 
 int	is_in_str(char *s, char c)
 {
@@ -22,14 +21,14 @@ int	is_in_str(char *s, char c)
 	{
 		if (s[i] == c)
 		{
-			return (1);
+			return (i);
 		}
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
-int	ft_strlen(char *s)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -64,4 +63,24 @@ char	*ft_str_merge(char *s1, char *s2)
 	}
 	result[i + j] = '\0';
 	return (result);
+}
+
+char	*ft_strdup(const char *src)
+{
+	int		src_len;
+	char	*dup;
+	int		i;
+
+	src_len = ft_strlen(src);
+	dup = malloc((src_len + 1) * sizeof(char));
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (i < src_len)
+	{
+		dup[i] = src[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:31 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/28 16:05:23 by mratke           ###   ########.fr       */
+/*   Updated: 2024/10/28 22:16:32 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 # endif
 // Utils
 int		is_in_str(char *s, char c);
+char	*ft_strdup(const char *src);
 char	*ft_str_merge(char *s1, char *s2);
 char	*get_next_line(int fd);
+int		ft_strlen(const char *s);
 
 #endif
