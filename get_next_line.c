@@ -6,33 +6,45 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/26 19:18:02 by mratke           ###   ########.fr       */
+/*   Updated: 2024/10/28 17:42:53 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fcntl.h"
 #include "get_next_line.h"
-#include "stdio.h"
-#include "unistd.h"
 
 char	*get_next_line(int fd)
 {
-	char	current_buffer[4];
-	size_t	bytes_read;
-	char	*final_buffer;
+	char	*current;
+	int		bytes_read;
+	char	*final;
+	char	*tmp;
 
-	final_buffer = malloc(sizeof(char));
-	final_buffer[0] = '\0';
-	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	while (is_in_str(current_buffer, '\n') == 0)
+	final = malloc(sizeof(char));
+	if (final == NULL)
+		return (NULL);
+	final[0] = '\0';
+	current = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (current == NULL)
+		return (free(final), NULL);
+	current[0] = '\0';
+	while (is_in_str(current, '\n') == 0)
 	{
-		bytes_read = read(fd, current_buffer, sizeof(current_buffer) - 1);
-		current_buffer[bytes_read] = '\0';
-		final_buffer = ft_str_merge(final_buffer, current_buffer,
-				sizeof(current_buffer) - 1);
+		bytes_read = read(fd, current, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (free(current), free(final), NULL);
+		if (bytes_read == 0)
+			break ;
+		current[bytes_read] = '\0';
+		tmp = ft_str_merge(final, current);
+		if (tmp == NULL)
+			return (free(current), free(final), NULL);
+		free(final);
+		final = tmp;
 	}
 	close(fd);
-	return (final_buffer);
+	if (final[0] == '\0')
+		return (free(current), free(final), NULL);
+	return (free(current), final);
 }
