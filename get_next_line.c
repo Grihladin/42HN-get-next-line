@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/28 22:48:37 by mratke           ###   ########.fr       */
+/*   Updated: 2024/10/31 22:06:26 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	*line_validator(char *s)
 	i = 0;
 	while (s[i] != '\n' && s[i] != '\0')
 		i++;
+	if (s[i] == '\n')
+		i++;
 	validated_line = malloc((i + 2) * sizeof(char));
 	if (validated_line == NULL)
 		return (NULL);
@@ -70,6 +72,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	buffer = NULL;
 	buffer = malloc(sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
@@ -85,5 +88,6 @@ char	*get_next_line(int fd)
 		return (free(line), free(buffer), NULL);
 	free(buffer);
 	buffer = tmp;
+	free(tmp);
 	return (line);
 }
