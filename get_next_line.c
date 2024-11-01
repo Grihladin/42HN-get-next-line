@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/10/31 22:06:26 by mratke           ###   ########.fr       */
+/*   Updated: 2024/11/01 21:14:44 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ static char	*line_validator(char *s)
 	int		j;
 
 	i = 0;
-	while (s[i] != '\n' && s[i] != '\0')
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+			break ;
 		i++;
-	if (s[i] == '\n')
-		i++;
+	}
 	validated_line = malloc((i + 2) * sizeof(char));
 	if (validated_line == NULL)
 		return (NULL);
@@ -72,11 +74,13 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = NULL;
-	buffer = malloc(sizeof(char));
 	if (buffer == NULL)
-		return (NULL);
-	buffer[0] = '\0';
+	{
+		buffer = malloc(sizeof(char));
+		if (buffer == NULL)
+			return (NULL);
+		buffer[0] = '\0';
+	}
 	buffer = read_and_merge(fd, buffer);
 	if (buffer == NULL || buffer[0] == '\0')
 		return (free(buffer), NULL);
@@ -88,6 +92,5 @@ char	*get_next_line(int fd)
 		return (free(line), free(buffer), NULL);
 	free(buffer);
 	buffer = tmp;
-	free(tmp);
 	return (line);
 }
