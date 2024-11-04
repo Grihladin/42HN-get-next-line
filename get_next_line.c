@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/11/01 21:14:44 by mratke           ###   ########.fr       */
+/*   Updated: 2024/11/04 13:15:28 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	}
 	buffer = read_and_merge(fd, buffer);
 	if (buffer == NULL || buffer[0] == '\0')
-		return (free(buffer), NULL);
+		return (free(buffer), buffer = NULL, NULL);
 	line = line_validator(buffer);
 	if (line == NULL)
 		return (free(buffer), NULL);
@@ -94,3 +94,18 @@ char	*get_next_line(int fd)
 	buffer = tmp;
 	return (line);
 }
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*st;
+// 	int		i;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	i = 3;
+// 	while (i > 0)
+// 	{
+// 		st = get_next_line(fd);
+// 		printf("%s\n", st);
+// 		i--;
+// 	}
+// }
