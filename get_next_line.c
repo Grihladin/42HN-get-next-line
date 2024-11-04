@@ -6,13 +6,13 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:34:23 by mratke            #+#    #+#             */
-/*   Updated: 2024/11/04 13:15:28 by mratke           ###   ########.fr       */
+/*   Updated: 2024/11/04 15:43:32 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*read_and_merge(int fd, char *current_line)
+char	*read_and_merge(int fd, char *current_line)
 {
 	char	*tmp;
 	char	*chars_readed;
@@ -40,7 +40,7 @@ static char	*read_and_merge(int fd, char *current_line)
 	return (current_line);
 }
 
-static char	*line_validator(char *s)
+char	*line_validator(char *s)
 {
 	int		i;
 	char	*validated_line;
