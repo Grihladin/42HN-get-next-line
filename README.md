@@ -6,7 +6,7 @@
 
 **get_next_line**([42Heilbronn](https://www.42heilbronn.de/en/) project) is a C function that reads a file line by line, returning one line at a time with each function call. This project introduces the concept of static variables and efficient file reading in C.
 
-## Features
+## ✨ Features
 
 - **Line-by-Line Reading**: Read any file descriptor one line at a time
 - **Configurable Buffer Size**: Adjustable `BUFFER_SIZE` for optimal performance
@@ -14,7 +14,7 @@
 - **Multiple File Descriptors**: Handle multiple files simultaneously
 - **42 Norm Compliant**: Follows strict coding standards with no memory leaks
 
-## Usage
+## 🚀 Usage
 
 ### Function Prototype
 
@@ -36,7 +36,7 @@ close(fd);
 
 **Returns**: The next line from the file descriptor, or `NULL` when EOF is reached or an error occurs.
 
-## Core Functions
+## 🔧 Core Functions
 
 - **`get_next_line(int fd)`**: Main function that returns the next line
 - **`read_and_merge(int fd, char *current_line)`**: Reads from fd and merges with existing content
@@ -46,7 +46,7 @@ close(fd);
 - **`is_in_str(char *s, char c)`**: Checks if character exists in string
 - **`ft_strlen(const char *s)`**: Calculates string length
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 get_next_line/
